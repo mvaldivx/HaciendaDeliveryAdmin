@@ -1,0 +1,25 @@
+.contDetallePedido{
+    width: 88%;
+    min-height: 100%;
+    margin: auto;
+    margin-top:50px;
+}
+.btnClose{
+    margin-left: auto;
+    margin-right: 0;
+    display: flex;
+    z-index: 1;
+}
+.mapa{
+    height: 60%;
+    width: 100%;
+    min-width: 170px;
+    min-height: 200px;
+    margin-top: 30px;
+}
+.map{
+    width:90%;
+    height:90%;
+    margin-left: auto;
+    margin-right: auto;
+}

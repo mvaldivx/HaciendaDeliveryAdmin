@@ -1,0 +1,15 @@
+.btnMenu{
+    display:inline-block;
+    position:absolute;
+    z-index:1;
+    left:0;
+    margin:5px;
+}
+.simenu{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width:20%;
+    display: inline-block;
+    min-width: 102px;
+}

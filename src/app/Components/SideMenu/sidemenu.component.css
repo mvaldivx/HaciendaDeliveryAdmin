@@ -1,0 +1,24 @@
+.enc{
+    width: 100%;
+    align-items: end;
+    text-align: end;
+}
+.btnCloseMenu{
+    display: inline-block;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.avatar{
+    display: inline-block;
+    text-align: initial;
+}
+
+.avatar i{
+    font-size: 50px;
+}
+li:hover{
+    background-color:#e2e6ea;
+}
+ul{
+    display: table;
+}

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+//import { Router } from '@angular/router';
+import { SideMenuComponent } from './Components/SideMenu/sidemenu.component'
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+  constructor(
+   // private rout: Router
+  ){
+    //this.rout.navigateByUrl('home')
+  }
 }

@@ -1,0 +1,21 @@
+<h1>Pedidos</h1>
+<div class="pedidos">
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let p of Pedidos" (click)="DetalleProducto(p)">
+            <div class="row col-12">
+                <div class="col-7">
+                    <div class="Estatus">Estatus: {{p.Estatus}}</div>
+                    <div class="FechaPedido">Pedido el: {{p.FechaPedido}}</div>
+                    <div class="calle">Direccion: {{p.Calle}} # {{p.Numero}}</div>
+                    <div class="Total"> $ {{p.Total}}</div>
+                </div>
+                <div class="col-5">
+                    <div class="mapa">
+                        <div class="minimap" id="map{{p.IdPedido}}"></div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+

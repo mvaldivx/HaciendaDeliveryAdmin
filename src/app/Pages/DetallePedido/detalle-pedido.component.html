@@ -1,0 +1,47 @@
+<button type="button" class="btnClose btn btn-light" (click)="closeDetalle()">
+    <i class="material-icons">
+        clear
+    </i>
+</button>
+<div class="contDetallePedido container">
+  <div class="form-group">
+    <div class="row">
+      <div class="form-group col-sm-6">
+        <label for="calle"> Calle</label>
+        <input class=" form-control" disabled id="calle"
+        value="{{DetallePedido.Calle}} #{{DetallePedido.Numero}}">
+      </div>
+      <div class="form-group col-sm-4">
+        <label for="fechaPedido"> Fecha Pedido</label>
+        <input class="form-control" disabled id="fechaPedido"
+        value="{{DetallePedido.FechaPedido}}">
+      </div>
+      <div class="form-group col-sm-4">
+          <label for="fechaConcluido"> Fecha Concluido</label>
+          <input class=" form-control" disabled id="fechaConcluido"
+          value="{{DetallePedido.FechaConcluido}}">
+      </div>
+      <div class="form-group col-sm-4">
+          <label for="estatus"> Estatus</label>
+          <select class="form-control" id="estatus" [(ngModel)]="DetallePedido.Estatus" (change)="ModificaEstatus($event)">
+            <option>Realizado</option>
+            <option>En Proceso</option>
+            <option>Enviado</option>
+            <option>Entregado</option>
+          </select>
+      </div>
+      <div class="form-group col-sm-4">
+          <label for="total"> Total</label>
+          <input class=" form-control" disabled id="total"
+          value="$ {{DetallePedido.Total}}">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="mapa">
+          <div id="map" class="map"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
