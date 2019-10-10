@@ -12,7 +12,10 @@ import { DetallePedidoStoreService } from '../DetallePedido/Store/detalle-pedido
 })
 export class PedidosComponent {
   @ViewChild('map',null) mapContainer: ElementRef;
-    Pedidos:any[]
+    PedidosRealizados:any[];
+    PedidosEnProceso:any[];
+    PedidosEnviados:any[];
+    PedidosEntregados:any[];
     meses=['Ene','Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 
     constructor(
@@ -20,36 +23,78 @@ export class PedidosComponent {
        private router: Router,
        private detallePedidoStore: DetallePedidoStoreService
     ){
-        this.ObtenerPedidos().then(r=>{
-          if(r){   
-            setTimeout(() => {
-              this.GeneraMapas()
-            },100)       
-          }
-        })
+        this.ObtenerPedidosRealizados()
     }
 
-    ObtenerPedidos(){
+    ObtenerPedidosRealizados(){
       return new Promise<boolean>(resolve =>{
-         this.pedidos.getPedidosActivos().subscribe(pedidos => {
+         this.pedidos.getPedidosRealizados().subscribe(pedidos => {
            if(pedidos.length > 0){
-             this.Pedidos = pedidos
-             this.Pedidos.forEach(p=>{
-                var dat = new Date(p.FechaPedido['seconds'] * 1000)
-                var dc = new Date(p.FechaConcluido['seconds'] * 1000)
-                var fp = dat.toLocaleDateString("en-US").split('/')
-                var fc = dc.toLocaleDateString("en-US").split('/')
-                p.FechaPedido = fp[1] + ' ' + this.meses[parseInt(fp[0])-1] + ' ' + fp[2] + '  ' + this.getHora(dat.getHours()) + ':' + dat.getMinutes() + ' ' + ((dat.getHours() >= 12)?'PM':'AM');
-                p.FechaConcluido = fc[1] + ' ' + this.meses[parseInt(fc[0])-1] + ' ' + fc[2] + '  ' + this.getHora(dc.getHours()) + ':' + dc.getMinutes() + ' ' + ((dc.getHours() >= 12)?'PM':'AM');
+             this.PedidosRealizados = pedidos
+             this.PedidosRealizados.forEach(p=>{
+                p.FechaPedido = this.formatDate(p.FechaPedido['seconds'])
+                p.FechaConcluido = this.formatDate(p.FechaConcluido['seconds'])
               })
               resolve(true)
            }else{
              resolve(false)
            }
-          
         })
       })
-       
+    }
+    ObtenerPedidosEnProceso(){
+      return new Promise<boolean>(resolve =>{
+         this.pedidos.getPedidosEnProceso().subscribe(pedidos => {
+           if(pedidos.length > 0){
+             this.PedidosEnProceso = pedidos
+             this.PedidosEnProceso.forEach(p=>{
+                p.FechaPedido = this.formatDate(p.FechaPedido['seconds'])
+                p.FechaConcluido = this.formatDate(p.FechaConcluido['seconds'])
+              })
+              resolve(true)
+           }else{
+             resolve(false)
+           }
+        })
+      })
+    }
+    ObtenerPedidosEnviados(){
+      return new Promise<boolean>(resolve =>{
+         this.pedidos.getPedidosEnviados().subscribe(pedidos => {
+           if(pedidos.length > 0){
+             this.PedidosEnviados = pedidos
+             this.PedidosEnviados.forEach(p=>{
+                p.FechaPedido = this.formatDate(p.FechaPedido['seconds'])
+                p.FechaConcluido = this.formatDate(p.FechaConcluido['seconds'])
+              })
+              resolve(true)
+           }else{
+             resolve(false)
+           }
+        })
+      })
+    }
+    ObtenerPedidosEntregados(){
+      return new Promise<boolean>(resolve =>{
+         this.pedidos.getPedidosEntregados().subscribe(pedidos => {
+           if(pedidos.length > 0){
+             this.PedidosEntregados = pedidos
+             this.PedidosEntregados.forEach(p=>{
+                p.FechaPedido = this.formatDate(p.FechaPedido['seconds'])
+                p.FechaConcluido = this.formatDate(p.FechaConcluido['seconds'])
+              })
+              resolve(true)
+           }else{
+             resolve(false)
+           }
+        })
+      })
+    }
+
+    formatDate(date){
+      var dat = new Date(date * 1000)
+      var fp = dat.toLocaleDateString("en-US").split('/')
+      return fp[1] + ' ' + this.meses[parseInt(fp[0])-1] + ' ' + fp[2] + '  ' + this.getHora(dat.getHours()) + ':' + dat.getMinutes() + ' ' + ((dat.getHours() >= 12)?'PM':'AM');
     }
 
     getHora(hora){
@@ -59,30 +104,13 @@ export class PedidosComponent {
         return hora-12
       }
     }
-
-    GeneraMapas(){
-      this.Pedidos.forEach(p=>{
-        var map:any 
-        var mapa = document.getElementById('map' + p.IdPedido)        
-        map= leaflet.map(mapa,{ zoomControl: false, dragging: false }).fitWorld();
-        map.touchZoom.disable();
-        map.doubleClickZoom.disable();
-        map.scrollWheelZoom.disable();
-        map.boxZoom.disable();
-        map.keyboard.disable();
-        leaflet.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
-        map.setView([p.lat, p.lng],16)
-  
-        leaflet.DomEvent.stopPropagation
-        var marker = leaflet.marker([p.lat,  p.lng],{draggable:false})
-        var markerGroup = leaflet.featureGroup();;
-        markerGroup.addLayer(marker);
-        map.addLayer(markerGroup);
-      })
-    }
   
     DetalleProducto(dp){
       this.detallePedidoStore.setDetallePedido(dp)
       this.router.navigateByUrl('detallePedido')
+    }
+
+    drop(event){
+      console.log(event)
     }
 }

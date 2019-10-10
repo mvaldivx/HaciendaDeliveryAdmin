@@ -26,6 +26,7 @@ import { NotificacionesServiceService } from './Api/Notificaciones/notificacione
 /*     MaterialAngular    */
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatListModule, MatSidenavModule } from '@angular/material';
+import {DragDropModule} from '@angular/cdk/drag-drop'
 
 const appRoutes: Routes = rout
 @NgModule({
@@ -49,7 +50,8 @@ const appRoutes: Routes = rout
     BrowserAnimationsModule,
     MatListModule,
     MatSidenavModule,
-    HttpClientModule
+    HttpClientModule,
+    DragDropModule
   ],
   providers: [
     PedidosService,

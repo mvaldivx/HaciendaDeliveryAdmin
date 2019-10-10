@@ -1,21 +1,70 @@
 <h1>Pedidos</h1>
 <div class="pedidos">
-    <ul class="list-group">
-        <li class="list-group-item" *ngFor="let p of Pedidos" (click)="DetalleProducto(p)">
-            <div class="row col-12">
-                <div class="col-7">
-                    <div class="Estatus">Estatus: {{p.Estatus}}</div>
-                    <div class="FechaPedido">Pedido el: {{p.FechaPedido}}</div>
-                    <div class="calle">Direccion: {{p.Calle}} # {{p.Numero}}</div>
-                    <div class="Total"> $ {{p.Total}}</div>
-                </div>
-                <div class="col-5">
-                    <div class="mapa">
-                        <div class="minimap" id="map{{p.IdPedido}}"></div>
+    <table>
+        <td>
+            <div class="list-group" dkDropList [cdkDropListData]="PedidosRealizados"
+                [cdkDropListConnectedTo]="EnProcesoList" #RealizadosList="cdkDropList"
+                (cdkDropListDropped)="drop($event)">
+                <div class="list-group-item" *ngFor="let p of PedidosRealizados" (click)="DetalleProducto(p)" cdkDrag>
+                    <div class="row col-12">
+                        <div>
+                            <div class="Estatus">Estatus: {{p.Estatus}}</div>
+                            <div class="FechaPedido">Pedido el: {{p.FechaPedido}}</div>
+                            <div class="calle">Direccion: {{p.Calle}} # {{p.Numero}}</div>
+                            <div class="Total"> $ {{p.Total}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </li>
-    </ul>
+        </td>
+        <td>
+            <div class="list-group" dkDropList [cdkDropListData]="PedidosEnProceso"
+                [cdkDropListConnectedTo]="[RealizadosList,EnviadosList]" #EnProcesoList="cdkDropList"
+                (cdkDropListDropped)="drop($event)">
+                <div class="list-group-item" *ngFor="let p of PedidosEnProceso" (click)="DetalleProducto(p)" cdkDrag>
+                    <div class="row col-12">
+                        <div>
+                            <div class="Estatus">Estatus: {{p.Estatus}}</div>
+                            <div class="FechaPedido">Pedido el: {{p.FechaPedido}}</div>
+                            <div class="calle">Direccion: {{p.Calle}} # {{p.Numero}}</div>
+                            <div class="Total"> $ {{p.Total}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group" dkDropList [cdkDropListData]="PedidosEnviados"
+                [cdkDropListConnectedTo]="[EnProcesoList,EntregadosList]" #EnviadosList="cdkDropList"
+                (cdkDropListDropped)="drop($event)">
+                <div class="list-group-item" *ngFor="let p of PedidosEnviados" (click)="DetalleProducto(p)" cdkDrag>
+                    <div class="row col-12">
+                        <div>
+                            <div class="Estatus">Estatus: {{p.Estatus}}</div>
+                            <div class="FechaPedido">Pedido el: {{p.FechaPedido}}</div>
+                            <div class="calle">Direccion: {{p.Calle}} # {{p.Numero}}</div>
+                            <div class="Total"> $ {{p.Total}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group" dkDropList [cdkDropListData]="PedidosEntregados"
+                [cdkDropListConnectedTo]="EnviadosList" #EntregadosList="cdkDropList"
+                (cdkDropListDropped)="drop($event)">
+                <div class="list-group-item" *ngFor="let p of PedidosEntregados" (click)="DetalleProducto(p)" cdkDrag>
+                    <div class="row col-12">
+                        <div>
+                            <div class="Estatus">Estatus: {{p.Estatus}}</div>
+                            <div class="FechaPedido">Pedido el: {{p.FechaPedido}}</div>
+                            <div class="calle">Direccion: {{p.Calle}} # {{p.Numero}}</div>
+                            <div class="Total"> $ {{p.Total}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </table>
 </div>
 

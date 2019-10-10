@@ -18,14 +18,17 @@ export interface Pedido {
 
 @Injectable()
 export class PedidosService {
-  Pedidos: AngularFirestoreCollection<Pedido>;
+  PedidosRealizados: AngularFirestoreCollection<Pedido>;
+  PedidosEnProceso: AngularFirestoreCollection<Pedido>;
+  PedidosEnviados: AngularFirestoreCollection<Pedido>;
+  PedidosEntregados: AngularFirestoreCollection<Pedido>;
   private PedidosFB: Observable<Pedido[]>;
   constructor(
     private db: AngularFirestore
   ) {
-    this.Pedidos = this.db.collection<Pedido>('Pedidos', ref=> ref.orderBy('IdPedido'));
+    this.PedidosRealizados = this.db.collection<Pedido>('Pedidos', ref=> ref.orderBy('IdPedido'));
 
-    this.PedidosFB = this.Pedidos.snapshotChanges().pipe(
+    this.PedidosFB = this.PedidosRealizados.snapshotChanges().pipe(
       map(actions=>{
         return actions.map(a=>{
           const data = a.payload.doc.data();
@@ -36,9 +39,45 @@ export class PedidosService {
     )
    }
 
-  getPedidosActivos(){
-    this.Pedidos =  this.db.collection<Pedido>('Pedidos', ref=> ref.orderBy('IdPedido','desc'))
-    return this.Pedidos.snapshotChanges().pipe(
+  getPedidosRealizados(){
+    this.PedidosRealizados =  this.db.collection<Pedido>('Pedidos', ref=> ref.orderBy('IdPedido','desc').where('Estatus','==','Realizado'))
+    return this.PedidosRealizados.snapshotChanges().pipe(
+      map(actions=>{
+        return actions.map(a=>{
+          const data = a.payload.doc.data();
+          const Id = a.payload.doc.id;
+          return{Id, ...data};
+        })
+      })
+    )
+  }
+  getPedidosEnProceso(){
+    this.PedidosEnProceso =  this.db.collection<Pedido>('Pedidos', ref=> ref.orderBy('IdPedido','desc').where('Estatus','==','En Proceso'))
+    return this.PedidosEnProceso.snapshotChanges().pipe(
+      map(actions=>{
+        return actions.map(a=>{
+          const data = a.payload.doc.data();
+          const Id = a.payload.doc.id;
+          return{Id, ...data};
+        })
+      })
+    )
+  }
+  getPedidosEnviados(){
+    this.PedidosEnviados =  this.db.collection<Pedido>('Pedidos', ref=> ref.orderBy('IdPedido','desc').where('Estatus','==','Enviado'))
+    return this.PedidosEnviados.snapshotChanges().pipe(
+      map(actions=>{
+        return actions.map(a=>{
+          const data = a.payload.doc.data();
+          const Id = a.payload.doc.id;
+          return{Id, ...data};
+        })
+      })
+    )
+  }
+  getPedidosEntregados(){
+    this.PedidosEntregados =  this.db.collection<Pedido>('Pedidos', ref=> ref.orderBy('IdPedido','desc').where('Estatus','==','Entregado'))
+    return this.PedidosEntregados.snapshotChanges().pipe(
       map(actions=>{
         return actions.map(a=>{
           const data = a.payload.doc.data();
