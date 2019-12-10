@@ -1,0 +1,78 @@
+<h1>Pedidos</h1>
+<div class="pedidos">
+    <table>
+        <thead>
+            <tr>
+                <th>Realizados</th>
+                <th>En Proceso</th>
+                <th>Enviados</th>
+                <th>Entregados</th>
+            </tr>
+        </thead>
+        <td class="border">
+            <div class="list-group" cdkDropList [cdkDropListData]="PedidosRealizados"
+                [cdkDropListConnectedTo]="EnProcesoList" #RealizadosList="cdkDropList"
+                (cdkDropListDropped)="drop($event)" id="RealizadosList">
+                <div class="list-group-item item" *ngFor="let p of PedidosRealizados" (click)="DetalleProducto(p)" cdkDrag>
+                    <div class="row col-12">
+                        <div class="content">
+                            <div class="NoPedido">Pedido No. <span>{{p.IdPedido}}</span></div>
+                            <div class="FechaPedido">Pedido el: {{p.FechaPedido}}</div>
+                            <div class="calle">Dirección: {{p.Calle}} # {{p.Numero}}</div>
+                            <div class="Total">Total: $ {{p.Total}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td class="border">
+            <div class="list-group" cdkDropList [cdkDropListData]="PedidosEnProceso"
+                [cdkDropListConnectedTo]="[RealizadosList,EnviadosList]" #EnProcesoList="cdkDropList"
+                (cdkDropListDropped)="drop($event)" id="EnProcesoList">
+                <div class="list-group-item item" *ngFor="let p of PedidosEnProceso" (click)="DetalleProducto(p)" cdkDrag>
+                    <div class="row col-12">
+                        <div class="content">
+                            <div class="NoPedido">Pedido No. <span>{{p.IdPedido}}</span></div>
+                            <div class="FechaPedido">Pedido el: {{p.FechaPedido}}</div>
+                            <div class="calle">Dirección: {{p.Calle}} # {{p.Numero}}</div>
+                            <div class="Total">Total: $ {{p.Total}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td class="border">
+            <div class="list-group" cdkDropList [cdkDropListData]="PedidosEnviados"
+                [cdkDropListConnectedTo]="[EnProcesoList,EntregadosList]" #EnviadosList="cdkDropList"
+                (cdkDropListDropped)="drop($event)"  id="EnviadosList">
+                <div class="list-group-item item" *ngFor="let p of PedidosEnviados" (click)="DetalleProducto(p)" cdkDrag>
+                    <div class="row col-12">
+                        <div class="content">
+                            <div class="NoPedido">Pedido No. <span>{{p.IdPedido}}</span></div>
+                            <div class="FechaPedido">Pedido el: {{p.FechaPedido}}</div>
+                            <div class="calle">Dirección: {{p.Calle}} # {{p.Numero}}</div>
+                            <div class="Total">Total: $ {{p.Total}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="list-group" cdkDropList [cdkDropListData]="PedidosEntregados"
+                [cdkDropListConnectedTo]="EnviadosList" #EntregadosList="cdkDropList"
+                (cdkDropListDropped)="drop($event)"  id="EntregadosList">
+                <div class="list-group-item item" *ngFor="let p of PedidosEntregados" (click)="DetalleProducto(p)" cdkDrag>
+                    <div class="row col-12">
+                        <div class="content">
+                            <div class="NoPedido">Pedido No. <span>{{p.IdPedido}}</span></div>
+                            <div class="FechaPedido">Pedido el: {{p.FechaPedido}}</div>
+                            <div class="calle">Dirección: {{p.Calle}} # {{p.Numero}}</div>
+                            <div class="Total">Total: $ {{p.Total}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </table>
+</div>
+
