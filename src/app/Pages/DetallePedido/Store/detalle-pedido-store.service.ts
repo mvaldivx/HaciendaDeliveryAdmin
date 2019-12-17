@@ -16,7 +16,6 @@ export interface DetallePedido{
   lng:            number;
 }
 
-
 @Injectable()
 export class DetallePedidoStoreService {
 
