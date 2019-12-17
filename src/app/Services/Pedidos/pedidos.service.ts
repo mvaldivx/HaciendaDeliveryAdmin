@@ -82,4 +82,8 @@ export class PedidosService {
                         ).doc(Id).update({Estatus:status})*/
   }
 
+  getPlayersId(IdUsuario: number): Observable<any>{
+    return this.claim.claim('Auth', 'getPlayersId',{IdUsuario: IdUsuario})
+  }
+
 }

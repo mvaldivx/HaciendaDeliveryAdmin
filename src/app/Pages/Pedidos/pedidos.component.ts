@@ -6,6 +6,7 @@ import { DetallePedidoStoreService } from '../DetallePedido/Store/detalle-pedido
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
+import { NotificacionesServiceService } from '../../Api/Notificaciones/notificaciones-service.service'
 
 
 @Component({
@@ -24,7 +25,8 @@ export class PedidosComponent {
     constructor(
        private pedidos: PedidosService,
        private router: Router,
-       private detallePedidoStore: DetallePedidoStoreService
+       private detallePedidoStore: DetallePedidoStoreService,
+       private notificacionesServ :NotificacionesServiceService
     ){
         this.socket = io('http://localhost:3000');
           this.socket.on('StatusWasChanged', status => {
@@ -144,6 +146,14 @@ export class PedidosComponent {
               accion = 'Entregado'
               break;
         }
+        var IdUsuario = event.item.element.nativeElement.children[0].children[0].children[4].children[0].textContent
+        this.pedidos.getPlayersId(Number(IdUsuario)).subscribe(pi =>{
+          var pis = []
+          pi.forEach(p=>{
+            pis.push(p.playerId)
+          })
+          this.notificacionesServ.EnviarNotificacionPedido(pis,accion, Number(noPedido))
+        })
         this.pedidos.CambiaEstatusPedido(accion,Number(noPedido), event.previousContainer.id).subscribe(()=>{
           this.Movepedido({IdPedido:Number(noPedido), Estatus:accion,From: event.previousContainer.id})
         })

@@ -16,17 +16,15 @@ export class NotificacionesServiceService {
   EnviarNotificacionPedido(player_id,estatus, IdPedido){
     var params ={
       'app_id' : this.app_id,
-      'include_player_ids' : [player_id],
+      'include_player_ids' : player_id,
       'headings': {"en": "Información del Pedido"},
       'contents': {"en": "Tu pedido ya fue " + estatus},
       "data": {"TipoNotificacion": 'Seguimiento',"IdPedido": IdPedido}
     }
     var headers =  new HttpHeaders().set('Authorization',this.Authorization).append('Content-Type','application/json; charset=utf-8')
-    console.log('enviar Notificacion');
-    
+ 
     return this.http.post(this.OneSignalUrl,params,{headers:headers}).subscribe(res=>{
-      console.log(res);
-      
+
     })
   }
 
