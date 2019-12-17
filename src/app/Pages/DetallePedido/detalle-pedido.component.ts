@@ -59,7 +59,7 @@ DetallePedido = this.detallePedStore.detallePedidoShow$.source['value'];
     switch(aux.Estatus){
       case 'En Proceso':
         estNoti = 'En Proceso'
-        break; 
+        break;
       case 'Enviado':
         estNoti = 'Enviado'
         break;
