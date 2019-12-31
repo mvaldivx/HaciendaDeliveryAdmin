@@ -147,13 +147,16 @@ export class PedidosComponent {
               break;
         }
         var IdUsuario = event.item.element.nativeElement.children[0].children[0].children[4].children[0].textContent
-        this.pedidos.getPlayersId(Number(IdUsuario)).subscribe(pi =>{
-          var pis = []
-          pi.forEach(p=>{
-            pis.push(p.playerId)
+        if(accion === 'Entregado'){
+          this.pedidos.getPlayersId(Number(IdUsuario)).subscribe(pi =>{
+            var pis = []
+            pi.forEach(p=>{
+              pis.push(p.playerId)
+            })
+            this.notificacionesServ.EnviarNotificacionPedido(pis,accion, Number(noPedido))
           })
-          this.notificacionesServ.EnviarNotificacionPedido(pis,accion, Number(noPedido))
-        })
+        }
+        
         this.pedidos.CambiaEstatusPedido(accion,Number(noPedido), event.previousContainer.id).subscribe(()=>{
           this.Movepedido({IdPedido:Number(noPedido), Estatus:accion,From: event.previousContainer.id})
         })

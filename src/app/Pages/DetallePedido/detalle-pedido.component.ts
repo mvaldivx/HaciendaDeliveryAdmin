@@ -71,13 +71,16 @@ DetallePedido = this.detallePedStore.detallePedidoShow$.source['value'];
         break;
     }
     this.detallePedStore.setDetallePedido(aux)
-    this.PedidosServ.getPlayersId(aux.IdUsuario).subscribe(pi =>{
-      var pis = []
-      pi.forEach(p=>{
-        pis.push(p.playerId)
+    if(estNoti === 'Entregado'){
+      this.PedidosServ.getPlayersId(aux.IdUsuario).subscribe(pi =>{
+        var pis = []
+        pi.forEach(p=>{
+          pis.push(p.playerId)
+        })
+        this.notificacionesServ.EnviarNotificacionPedido(pis,estNoti, aux.IdPedido)
       })
-      this.notificacionesServ.EnviarNotificacionPedido(pis,estNoti, aux.IdPedido)
-    })
+    }
+
     
     
   }
