@@ -1,24 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Configuracion } from '../Configuracion';
 
 @Injectable()
 export class Claim {
-    ip : string = 'localhost'
-    puerto: string = '3000';
-    servidor: string = 'http://'+this.ip;
 
     constructor(
-        public httpClient: HttpClient
+        public httpClient: HttpClient,
+        private config: Configuracion
     ){}
 
     claim(padre,archivo,params): Observable<any> {
-        return this.httpClient.get(this.servidor +':'+ this.puerto +'/'+ padre + '/' + archivo ,{params:params})
+        return this.httpClient.get(this.config.servidor +':'+ this.config.puerto +'/'+ padre + '/' + archivo ,{params:params})
       }
     
-      claimPost(padre,archivo,params): Observable<any>{
-        return this.httpClient.post(this.servidor + ':' + this.puerto + '/' + padre + '/' + archivo,{params:params})
-        
-      }
+    claimPost(padre,archivo,params): Observable<any>{
+      return this.httpClient.post(this.config.servidor + ':' + this.config.puerto + '/' + padre + '/' + archivo,{params:params})    
+    }
+
+    claimImage(params):Observable<any>{
+      return this.httpClient.post(this.config.ipServidorImagenes + this.config.metodoSubeImagen,params)
+    }
+    
 
 }

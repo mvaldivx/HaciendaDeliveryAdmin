@@ -1,0 +1,33 @@
+.categorias{
+    padding:50px;
+}
+.Tabcategoria{
+    min-width:90%;
+    margin:auto;
+}
+
+.Coleditar{
+    max-width: 50px !important;
+    width: 50px;
+}
+
+.datEditar{
+    color: #10dc60;
+}
+
+.fabButton{
+    margin-top:30px;
+    position: fixed;
+    margin-left:50px;
+}
+
+
+
+.fabButton button{
+    /*width:40px !important;
+    height:55px !important;
+    border-radius: 50%;*/
+    background-color: #10dc60;
+    color:white;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}

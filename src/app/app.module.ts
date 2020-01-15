@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -16,16 +16,21 @@ import { HomeComponent } from './Pages/home/home.component'
 import { PedidosComponent } from './Pages/Pedidos/pedidos.component'
 import { SideMenuComponent } from './Components/SideMenu/sidemenu.component'
 import { DetallePedidoComponent } from './Pages/DetallePedido/detalle-pedido.component'
+import { NuevaCategoriaComponent } from './Pages/nueva-categoria/nueva-categoria.component'
 /*     SERVICIOS    */
 import { PedidosService } from './Services/Pedidos/pedidos.service'
 import { SidestoreService } from './Components/SideMenu/Store/sidestore.service'
 import { DetallePedidoStoreService } from './Pages/DetallePedido/Store/detalle-pedido-store.service'
 import { NotificacionesServiceService } from './Api/Notificaciones/notificaciones-service.service'
 import { Claim } from './Api/Claim/claim'
+import { Configuracion } from './Api/Configuracion'
 /*     MaterialAngular    */
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatListModule, MatSidenavModule } from '@angular/material';
-import {DragDropModule} from '@angular/cdk/drag-drop'
+import {MatListModule, MatSidenavModule, MatTableModule, MatButtonModule,
+   MatIconModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSnackBarModule } from '@angular/material';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { CategoriasComponent } from './Pages/categorias/categorias.component';
+import { DragDropDirective } from './Components/DragDrop/drag-drop.directive';
 
 @NgModule({
   declarations: [
@@ -33,12 +38,16 @@ import {DragDropModule} from '@angular/cdk/drag-drop'
     HomeComponent,
     PedidosComponent,
     SideMenuComponent,
-    DetallePedidoComponent
+    DetallePedidoComponent,
+    CategoriasComponent,
+    NuevaCategoriaComponent,
+    DragDropDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule ,
     HttpModule,
     //AngularFireModule.initializeApp(environment.firebase),
     //AngularFirestoreModule,
@@ -46,15 +55,26 @@ import {DragDropModule} from '@angular/cdk/drag-drop'
     BrowserAnimationsModule,
     MatListModule,
     MatSidenavModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule,
     HttpClientModule,
-    DragDropModule
+    DragDropModule    
   ],
   providers: [
     PedidosService,
     SidestoreService,
     DetallePedidoStoreService,
     NotificacionesServiceService,
-    Claim
+    Claim,
+    Configuracion
+  ],
+  entryComponents:[
+    NuevaCategoriaComponent
   ],
   bootstrap: [AppComponent]
 })

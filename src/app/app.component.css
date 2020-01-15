@@ -13,3 +13,7 @@
     display: inline-block;
     min-width: 102px;
 }
+.router{
+    min-width: 100%;
+    min-height: 100vh;
+}

@@ -1,0 +1,25 @@
+<div class="formulario">
+    <form class="form" [formGroup]="form">
+        <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)">
+            <img *ngIf="imagen" [src]="imagen">
+            <input hidden formControlName="image" name="image" type="file" #fileInput accept="image/png, image/jpeg, imagen/jpg"
+             multiple="false" (change)="uploadFile($event.target.files)" value="https://image.shutterstock.com/image-vector/sample-stamp-grunge-texture-vector-260nw-1389188336.jpg">
+        </div>
+        <mat-form-field>
+            <input matInput [(ngModel)]="Categoria" placeholder="Nombre" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+    </form>
+    <button class="btn btn-primary" type="button" disabled>
+        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+        <span class="sr-only">Loading...</span>
+      </button>
+    <div class="buttons">
+        <button class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="sr-only">Loading...</span>
+        </button>
+       <!-- <button mat-button (click)="NewCategory()">Guardar</button>-->
+    </div>
+    
+</div>
+

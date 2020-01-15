@@ -28,7 +28,7 @@ export class PedidosComponent {
        private detallePedidoStore: DetallePedidoStoreService,
        private notificacionesServ :NotificacionesServiceService
     ){
-        this.socket = io('http://localhost:3000');
+        this.socket = io('http://3.15.223.31:3030');
           this.socket.on('StatusWasChanged', status => {
             this.Movepedido(status)
           });
