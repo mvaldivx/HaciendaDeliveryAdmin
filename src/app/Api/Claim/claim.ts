@@ -19,8 +19,8 @@ export class Claim {
       return this.httpClient.post(this.config.servidor + ':' + this.config.puerto + '/' + padre + '/' + archivo,{params:params})    
     }
 
-    claimImage(params):Observable<any>{
-      return this.httpClient.post(this.config.ipServidorImagenes + this.config.metodoSubeImagen,params)
+    claimImage(params, metodo):Observable<any>{
+      return this.httpClient.post(this.config.ipServidorImagenes + metodo,params)
     }
     
 

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CategoriasService } from '../../Services/Categorias/categorias.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Configuracion } from '../../Api/Configuracion'
 
 
 @Component({
@@ -19,10 +21,20 @@ loading= false;
   constructor(
     private CategoriaServ: CategoriasService,
     private formBuilder: FormBuilder,
-    private dialogRef: MatDialogRef<NuevaCategoriaComponent>
-  ) { }
+    private dialogRef: MatDialogRef<NuevaCategoriaComponent>,
+    private snackBar: MatSnackBar,
+    private configuracion: Configuracion,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { 
+    console.log(this.data)
+    if(this.data.categoria != ""){
+      this.Categoria = this.data.categoria 
+      this.imagen = this.configuracion.direccionImagenes + 'Categorias/' + this.Categoria + '.jpg'
+    }
+  }
 
   ngOnInit() {
+    this.dialogRef
     this.form = this.formBuilder.group({
       image: ['']
     });
@@ -44,15 +56,28 @@ loading= false;
     }
   }
 
-  NewCategory(){
+  save(){
+    if(this.imagen && this.Categoria != ''){
+      if(this.data.nuevo){
+        this.NewCategory(true)
+      }else{
+        if(this.Categoria != this.data.categoria ||
+          this.imagen != this.configuracion.direccionImagenes + 'Categorias/' + this.Categoria + '.jpg'){
+            this.UpdateCategory()
+        }
+      }
+    }
+  }
+
+  NewCategory(nuevo){
     if(this.imagen && this.Categoria != ''){
       this.loading = true;
-      var categoria = {Categoria: this.Categoria, img: this.Categoria }
+      var categoria = (nuevo)?{Categoria: this.Categoria, img: this.Categoria }:{Id: this.data.Id,Categoria: this.Categoria, img: this.Categoria }
       var formData = new FormData();
       formData.append('image',this.imagePath)
       formData.append('nombre', this.Categoria)
       formData.append('ruta','./resources/Images/Categorias/')
-      this.CategoriaServ.NewCategory(categoria).subscribe(r=>{
+      this.CategoriaServ.NewCategory(categoria,nuevo).subscribe(r=>{
         if(r.affectedRows === 1){
           this.CategoriaServ.InsertImage(formData).subscribe(res =>{
             this.loading = false
@@ -64,9 +89,73 @@ loading= false;
         }
       },err=>{
         this.loading = false
-        this.dialogRef.close({error:true, errmessage:err})
+        if(err.error.text != 'existe'){
+          this.dialogRef.close({error:true, errmessage:err})
+        }else{
+          let snackBarRef = this.snackBar.open('La Categoria que desea guardar ya existe.','',{duration:2000})
+        }
       })
     }
+  }
+
+  UpdateCategory(){
+    this.loading = true;
+    //en caso que cambio categoria e imagen
+    console.log(this.imagen)
+    console.log(this.configuracion.direccionImagenes + 'Categorias/' + this.data.categoria + '.jpg' );
+    
+    if(this.imagen != this.configuracion.direccionImagenes + 'Categorias/' + this.data.categoria + '.jpg' &&
+     this.Categoria != this.data.categoria){
+       this.eliminaImagen()
+      this.NewCategory(false)
+    }
+    //en caso que solo haya cambiado la categoria
+    else if(this.Categoria != this.data.categoria &&
+      this.imagen === this.configuracion.direccionImagenes + 'Categorias/' + this.data.categoria + '.jpg' ){
+        var categoria = {Id: this.data.Id,Categoria: this.Categoria, img: this.Categoria }
+        this.renameImage()  
+        this.CategoriaServ.NewCategory(categoria,false).subscribe(r=>{
+          this.loading = false
+          this.dialogRef.close({guardado:true})
+        },err=>{
+          this.loading = false
+          this.dialogRef.close({error:true, errmessage:err})
+        })
+    }
+    //en caso que cambio la imagen
+    else if(this.Categoria === this.data.categoria &&
+      this.imagen != this.configuracion.direccionImagenes + 'Categorias/' + this.data.categoria + '.jpg' ){
+        var formData = new FormData();
+        formData.append('image',this.imagePath)
+        formData.append('nombre', this.Categoria)
+        formData.append('ruta','./resources/Images/Categorias/')
+        this.CategoriaServ.InsertImage(formData).subscribe(res =>{
+          this.loading = false
+          this.dialogRef.close({guardado:true})
+        }, err=>{
+          this.loading = false
+          this.dialogRef.close({error:true, errmessage:err})
+        })
+    }
+  }
+
+  renameImage(){
+    var formData = new FormData();
+    formData.append('newnombre', this.Categoria)
+    formData.append('nombre', this.data.categoria)
+    formData.append('ruta','./resources/Images/Categorias/')
+    this.CategoriaServ.RenameImage(formData).subscribe(res =>{
+    }, err=>{
+    })
+  }
+
+  eliminaImagen(){
+    var formData = new FormData();
+    formData.append('nombre', this.data.categoria)
+    formData.append('ruta','./resources/Images/Categorias/')
+    this.CategoriaServ.EliminaImage(formData).subscribe(res =>{
+    }, err=>{
+    })
   }
 
 }

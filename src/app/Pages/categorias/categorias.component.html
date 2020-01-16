@@ -3,7 +3,7 @@
     <table mat-table [dataSource]="Categorias" class="mat-elevation-z8 Tabcategoria">
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef> Id </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.Id}} </td>
         </ng-container>
         <ng-container matColumnDef="Categoria">
             <th mat-header-cell *matHeaderCellDef> Categoria </th>
@@ -11,7 +11,10 @@
         </ng-container>
         <ng-container matColumnDef="Editar">
             <th mat-header-cell *matHeaderCellDef class="Coleditar"> Editar </th>
-            <td mat-cell *matCellDef="let element" class="datEditar"> <button mat-button><mat-icon>build</mat-icon></button> </td>
+            <td mat-cell *matCellDef="let element" class="datEditar"> 
+                <button mat-button (click)="ModificaCategoria(element.Id, element.Categoria)"><mat-icon>build</mat-icon>
+                </button> 
+            </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

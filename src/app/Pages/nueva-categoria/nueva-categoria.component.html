@@ -9,14 +9,11 @@
             <input matInput [(ngModel)]="Categoria" placeholder="Nombre" [ngModelOptions]="{standalone: true}">
         </mat-form-field>
     </form>
-    <button class="btn btn-primary" type="button" disabled>
-        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-        <span class="sr-only">Loading...</span>
-      </button>
     <div class="buttons">
-        <button class="btn btn-primary" type="button" disabled>
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <span class="sr-only">Loading...</span>
+        <button class="btn btn-primary" type="button" (click)="save()">
+            <span *ngIf="!loading">Guardar</span>
+            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="sr-only" *ngIf="loading">Loading...</span>
         </button>
        <!-- <button mat-button (click)="NewCategory()">Guardar</button>-->
     </div>

@@ -16,12 +16,27 @@ export class CategoriasService {
     private claim : Claim
   ) { }
 
-  NewCategory(categoria): Observable <any> {
-    return this.claim.claimPost('CategoriasAdmin','NewCategory',categoria)
+  NewCategory(categoria, nuevo): Observable <any> {
+    if(nuevo)
+      return this.claim.claimPost('CategoriasAdmin','NewCategory',categoria)
+    else
+      return this.claim.claimPost('CategoriasAdmin','UpdateCategory',categoria)
   }
 
   InsertImage(image):Observable<any>{
-    return this.claim.claimImage(image)
+    return this.claim.claimImage(image,'uploadImage.php')
+  }
+
+  EliminaImage(categoria):Observable<any>{
+    return this.claim.claimImage(categoria,'deleteImage.php')
+  }
+
+  RenameImage(image):Observable<any>{
+    return this.claim.claimImage(image,'renameImage.php')
+  }
+
+  getCategorias(): Observable<any>{
+    return this.claim.claim('CategoriasAdmin','getCategorias','')
   }
 
 }
