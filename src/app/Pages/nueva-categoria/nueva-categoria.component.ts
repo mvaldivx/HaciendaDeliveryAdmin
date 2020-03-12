@@ -77,7 +77,7 @@ loading= false;
       formData.append('image',this.imagePath)
       formData.append('nombre', this.Categoria)
       formData.append('ruta','./resources/Images/Categorias/')
-      this.CategoriaServ.NewCategory(categoria,nuevo).subscribe(r=>{
+      this.CategoriaServ.NewCategory(categoria,nuevo).then(r=>{
         if(r.affectedRows === 1){
           this.CategoriaServ.InsertImage(formData).subscribe(res =>{
             this.loading = false
@@ -114,7 +114,7 @@ loading= false;
       this.imagen === this.configuracion.direccionImagenes + 'Categorias/' + this.data.categoria + '.jpg' ){
         var categoria = {Id: this.data.Id,Categoria: this.Categoria, img: this.Categoria }
         this.renameImage()  
-        this.CategoriaServ.NewCategory(categoria,false).subscribe(r=>{
+        this.CategoriaServ.NewCategory(categoria,false).then(r=>{
           this.loading = false
           this.dialogRef.close({guardado:true})
         },err=>{

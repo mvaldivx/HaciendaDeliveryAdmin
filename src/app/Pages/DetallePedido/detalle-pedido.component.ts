@@ -72,7 +72,7 @@ DetallePedido = this.detallePedStore.detallePedidoShow$.source['value'];
     }
     this.detallePedStore.setDetallePedido(aux)
     if(estNoti === 'Entregado'){
-      this.PedidosServ.getPlayersId(aux.IdUsuario).subscribe(pi =>{
+      this.PedidosServ.getPlayersId(aux.IdUsuario).then(pi =>{
         var pis = []
         pi.forEach(p=>{
           pis.push(p.playerId)

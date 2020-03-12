@@ -27,10 +27,14 @@ import { Configuracion } from './Api/Configuracion'
 /*     MaterialAngular    */
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatListModule, MatSidenavModule, MatTableModule, MatButtonModule,
-   MatIconModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSnackBarModule } from '@angular/material';
+   MatIconModule, MatDialogModule, MatFormFieldModule, MatInputModule, 
+   MatSnackBarModule, MatOptionModule, MatSelectModule } from '@angular/material';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { CategoriasComponent } from './Pages/categorias/categorias.component';
 import { DragDropDirective } from './Components/DragDrop/drag-drop.directive';
+import { AnunciosComponent } from './Pages/anuncios/anuncios.component';
+import { NegociosComponent } from './Pages/negocios/negocios.component';
+import { DetalleNegocioComponent } from './Pages/negocios/detalle-negocio/detalle-negocio.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +45,10 @@ import { DragDropDirective } from './Components/DragDrop/drag-drop.directive';
     DetallePedidoComponent,
     CategoriasComponent,
     NuevaCategoriaComponent,
-    DragDropDirective
+    DragDropDirective,
+    AnunciosComponent,
+    NegociosComponent,
+    DetalleNegocioComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +69,8 @@ import { DragDropDirective } from './Components/DragDrop/drag-drop.directive';
     MatFormFieldModule,
     MatInputModule,
     MatSnackBarModule,
+    MatOptionModule,
+    MatSelectModule,
     HttpClientModule,
     DragDropModule    
   ],
@@ -74,7 +83,8 @@ import { DragDropDirective } from './Components/DragDrop/drag-drop.directive';
     Configuracion
   ],
   entryComponents:[
-    NuevaCategoriaComponent
+    NuevaCategoriaComponent,
+    DetalleNegocioComponent
   ],
   bootstrap: [AppComponent]
 })

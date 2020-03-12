@@ -57,7 +57,7 @@ export class DetallePedidoStoreService {
 
   set detalle(val: DetallePedido){
     this._detallePedido.next(val);
-    this.PedidosService.CambiaEstatusPedido(val.Estatus, val.IdPedido, this.estatusAnt).subscribe(data => null,error => console.log(error))
+    this.PedidosService.CambiaEstatusPedido(val.Estatus, val.IdPedido, this.estatusAnt).then(data => null,error => console.log(error))
      
   }
 

@@ -1,0 +1,23 @@
+<div class="Encabezado">
+    <h1>Anuncios</h1>
+</div>
+
+<div>
+    <table mat-table [dataSource]="Anuncios" class="mat-elevation-z8 Tabcategoria">
+        <ng-container matColumnDef="Producto">
+            <th mat-header-cell *matHeaderCellDef> Producto </th>
+            <td (click)="InfoAnuncio(element.IdProducto)" mat-cell *matCellDef="let element"> {{element.Producto}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Negocio">
+            <th mat-header-cell *matHeaderCellDef> Negocio </th>
+            <td (click)="InfoAnuncio(element.IdProducto)" mat-cell *matCellDef="let element"> {{element.Negocio}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Estatus">
+            <th mat-header-cell *matHeaderCellDef> Estatus </th>
+            <td (click)="InfoAnuncio(element.IdProducto)" mat-cell *matCellDef="let element">
+                 {{(element.Revision)?'En Revisión':(element.Estatus)?'Activo':Inactivo}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

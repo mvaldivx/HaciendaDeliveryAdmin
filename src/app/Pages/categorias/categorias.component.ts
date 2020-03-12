@@ -10,8 +10,7 @@ import { CategoriasService } from '../../Services/Categorias/categorias.service'
 })
 export class CategoriasComponent implements OnInit {
   columnsToDisplay = ['userName', 'age'];
-  Categorias=[
-  ];
+  Categorias=[];
   displayedColumns: string[] = ['id','Categoria','Editar'];
   constructor(
     private dialog: MatDialog,
@@ -24,7 +23,7 @@ export class CategoriasComponent implements OnInit {
   }
 
   getCategorias(){
-    this.categServ.getCategorias().subscribe(cat =>{
+    this.categServ.getCategorias().then(cat =>{
       this.Categorias = cat
     })
   }

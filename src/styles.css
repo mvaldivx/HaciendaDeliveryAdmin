@@ -16,3 +16,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding:0!important;
     overflow: hidden !important;
 }
+.dialogNewCategoria .mat-dialog-container{   
+    padding: 15px !important;
+}
+
+.dialogEditNegocio{
+    min-width: 550px !important;
+    max-width: 550px !important;
+    min-height: 420px !important;
+    max-height: 420px !important;
+    margin: auto;
+    padding:0!important;
+    overflow: hidden !important;
+}

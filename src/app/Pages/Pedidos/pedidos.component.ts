@@ -7,7 +7,8 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { NotificacionesServiceService } from '../../Api/Notificaciones/notificaciones-service.service'
-
+import { Claim } from '../../Api/Claim/claim'
+import { Configuracion } from '../../Api/Configuracion'
 
 @Component({
   selector: 'pedidos',
@@ -26,12 +27,17 @@ export class PedidosComponent {
        private pedidos: PedidosService,
        private router: Router,
        private detallePedidoStore: DetallePedidoStoreService,
-       private notificacionesServ :NotificacionesServiceService
+       private notificacionesServ :NotificacionesServiceService,
+       private claim : Claim,
+       private config : Configuracion
     ){
-        this.socket = io('http://3.15.223.31:3030');
+        this.claim.getUrl().subscribe(res =>{
+          this.socket = io(res[this.config.servidor].ip + ':' + res[this.config.servidor].port);
           this.socket.on('StatusWasChanged', status => {
             this.Movepedido(status)
           });
+        })
+        
         this.ObtenerPedidosRealizados()
         this.ObtenerPedidosEnProceso()
         this.ObtenerPedidosEnviados()
@@ -40,7 +46,7 @@ export class PedidosComponent {
 
     ObtenerPedidosRealizados(){
       return new Promise<boolean>(resolve =>{
-         this.pedidos.getPedidosRealizados().subscribe(pedidos => {
+         this.pedidos.getPedidosRealizados().then(pedidos => {
            if(pedidos.length > 0){
              this.PedidosRealizados = pedidos
              this.PedidosRealizados.forEach(p=>{
@@ -57,7 +63,7 @@ export class PedidosComponent {
     }
     ObtenerPedidosEnProceso(){
       return new Promise<boolean>(resolve =>{
-         this.pedidos.getPedidosEnProceso().subscribe(pedidos => {
+         this.pedidos.getPedidosEnProceso().then(pedidos => {
            if(pedidos.length > 0){
              this.PedidosEnProceso = pedidos
              this.PedidosEnProceso.forEach(p=>{
@@ -74,7 +80,7 @@ export class PedidosComponent {
     }
     ObtenerPedidosEnviados(){
       return new Promise<boolean>(resolve =>{
-         this.pedidos.getPedidosEnviados().subscribe(pedidos => {
+         this.pedidos.getPedidosEnviados().then(pedidos => {
            if(pedidos.length > 0){
              this.PedidosEnviados = pedidos
              this.PedidosEnviados.forEach(p=>{
@@ -91,7 +97,7 @@ export class PedidosComponent {
     }
     ObtenerPedidosEntregados(){
       return new Promise<boolean>(resolve =>{
-         this.pedidos.getPedidosEntregados().subscribe(pedidos => {
+         this.pedidos.getPedidosEntregados().then(pedidos => {
            if(pedidos.length > 0){
              this.PedidosEntregados = pedidos
              this.PedidosEntregados.forEach(p=>{
@@ -148,7 +154,7 @@ export class PedidosComponent {
         }
         var IdUsuario = event.item.element.nativeElement.children[0].children[0].children[4].children[0].textContent
         if(accion === 'Entregado'){
-          this.pedidos.getPlayersId(Number(IdUsuario)).subscribe(pi =>{
+          this.pedidos.getPlayersId(Number(IdUsuario)).then(pi =>{
             var pis = []
             pi.forEach(p=>{
               pis.push(p.playerId)
@@ -157,7 +163,7 @@ export class PedidosComponent {
           })
         }
         
-        this.pedidos.CambiaEstatusPedido(accion,Number(noPedido), event.previousContainer.id).subscribe(()=>{
+        this.pedidos.CambiaEstatusPedido(accion,Number(noPedido), event.previousContainer.id).then(()=>{
           this.Movepedido({IdPedido:Number(noPedido), Estatus:accion,From: event.previousContainer.id})
         })
       }

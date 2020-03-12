@@ -1,0 +1,38 @@
+<div class="Encabezado">
+    <h1>Negocios</h1>
+</div>
+
+<div>
+    <table mat-table [dataSource]="Negocios" class="mat-elevation-z8 Tabcategoria">
+        <ng-container matColumnDef="Id">
+            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <td (click)="infoNegocio(element)" mat-cell *matCellDef="let element"> {{element.IdNegocio}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Negocio">
+            <th mat-header-cell *matHeaderCellDef> Negocio </th>
+            <td (click)="infoNegocio(element)" mat-cell *matCellDef="let element"> {{element.Negocio}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Descripcion">
+            <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+            <td (click)="infoNegocio(element)" mat-cell *matCellDef="let element">
+                 {{element.Descripcion}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Categoria">
+            <th mat-header-cell *matHeaderCellDef> Categoria </th>
+            <td (click)="infoNegocio(element)" mat-cell *matCellDef="let element">
+                 {{element.Categoria}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Estatus">
+            <th mat-header-cell *matHeaderCellDef> Estatus </th>
+            <td (click)="infoNegocio(element)" mat-cell *matCellDef="let element">
+                 {{(element.Estatus)?'Activo':'Inactivo'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Abierto">
+            <th mat-header-cell *matHeaderCellDef> Abierto </th>
+            <td (click)="infoNegocio(element)" mat-cell *matCellDef="let element">
+                 {{(element.Abierto)?'Abierto':'Cerrado'}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

@@ -1,0 +1,42 @@
+<div>
+    <h2>Información general</h2>
+    <mat-form-field appearance="fill" class="comp">
+        <mat-label>Negocio</mat-label>
+        <input matInput [(ngModel)]="Negocio.Negocio">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="comp descripcion">
+        <mat-label>Descripcion</mat-label>
+        <textarea matInput [(ngModel)]="Negocio.Descripcion"></textarea>  
+    </mat-form-field>
+    <div class="estado comp">
+        <span *ngIf="Negocio.Abierto">Abierto: </span><span *ngIf="!Negocio.Abierto">Cerrado: </span>
+        <label class="switch">
+            <input type="checkbox" [(ngModel)]="Negocio.Abierto">
+            <span class="slider round"></span>
+        </label>
+    </div>
+    <div class="estado comp">
+        <span *ngIf="Negocio.Estatus">Activo: </span><span *ngIf="!Negocio.Estatus">Inactivo: </span>
+        <label class="switch">
+            <input type="checkbox" [(ngModel)]="Negocio.Estatus">
+            <span class="slider round"></span>
+        </label>
+    </div>
+    <mat-form-field class="comp">
+        <mat-label>Categoria</mat-label>
+        <mat-select [(ngModel)]="Negocio.IdCategoria">
+            <mat-option *ngFor="let c of categorias" [value]="c.Id">{{c.Categoria}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <h3>Contacto</h3>
+    <mat-form-field appearance="fill" class="comp">
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="Negocio.Nombre" readonly="true">
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="comp">
+        <mat-label>Telefono</mat-label>
+        <input matInput [(ngModel)]="Negocio.Telefono" readonly="true">
+    </mat-form-field>
+    <button mat-icon-button mat-button class="changeAdmin" (click)="ModificarAdmin()"><mat-icon>build</mat-icon></button>
+    <button  mat-button class="btnGuardar" (click)="GuardaNegocio()">Guardar</button>
+</div>

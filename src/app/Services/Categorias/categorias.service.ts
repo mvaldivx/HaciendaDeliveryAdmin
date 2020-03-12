@@ -16,11 +16,13 @@ export class CategoriasService {
     private claim : Claim
   ) { }
 
-  NewCategory(categoria, nuevo): Observable <any> {
-    if(nuevo)
-      return this.claim.claimPost('CategoriasAdmin','NewCategory',categoria)
-    else
-      return this.claim.claimPost('CategoriasAdmin','UpdateCategory',categoria)
+  NewCategory(categoria, nuevo){
+    return new Promise<any>((resolve, reject) =>{
+      if(nuevo)
+        this.claim.claimPost('CategoriasAdmin','NewCategory',categoria).then(res => resolve(res))
+      else
+        this.claim.claimPost('CategoriasAdmin','UpdateCategory',categoria).then(res=>resolve(res))
+    })
   }
 
   InsertImage(image):Observable<any>{
@@ -35,8 +37,12 @@ export class CategoriasService {
     return this.claim.claimImage(image,'renameImage.php')
   }
 
-  getCategorias(): Observable<any>{
-    return this.claim.claim('CategoriasAdmin','getCategorias','')
+  getCategorias(){
+    return new Promise<any>((resolve, reject) =>{
+      this.claim.claim('CategoriasAdmin','getCategorias','').then(res =>
+        resolve(res)
+        )
+    })
   }
 
 }
